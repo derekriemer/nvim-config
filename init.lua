@@ -1,0 +1,5 @@
+require("config.options")
+require("config.locals")
+require("config.keymaps")
+require("config.speaks")
+require("config.lazy")
