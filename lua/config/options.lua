@@ -8,9 +8,7 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 
-vim.opt.shell = "pwsh"
-vim.opt.shellcmdflag =
-  "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+vim.opt.shell = "bash"
 
 vim.opt.shellquote = ""
 vim.opt.shellxquote = ""
