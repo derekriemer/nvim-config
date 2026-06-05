@@ -3,6 +3,10 @@ vim.g.maplocalleader = "\\"
 
 vim.opt.ruler=false
 vim.opt.mouse = "a"
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.tabstop = 2
 
 vim.opt.shell = "pwsh"
 vim.opt.shellcmdflag =

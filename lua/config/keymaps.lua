@@ -18,3 +18,7 @@ end, { desc = "Open all folds" })
 vim.keymap.set("n", "<leader>ft", function()
   vim.opt_local.foldenable = not vim.opt_local.foldenable:get()
 end, { desc = "Toggle folds" })
+
+vim.api.nvim_create_user_command("Share", function()
+  vim.cmd.write(vim.fn.expand("~/share/" .. vim.fn.expand("%:t")))
+end, {})

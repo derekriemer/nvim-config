@@ -1,5 +1,6 @@
 require("config.options")
 require("config.locals")
+require("config.commands")
 require("config.keymaps")
 require("config.speaks")
 require("config.lazy")
