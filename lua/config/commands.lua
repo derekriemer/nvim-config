@@ -31,3 +31,22 @@ end, {
   complete = "lua",
 })
 
+-- Define a share command that dumps the buffer to ~/share
+vim.api.nvim_create_user_command("Share", function(opts)
+  local filename = vim.fn.expand("%:t")
+  local target = vim.fn.expand("~/share/" .. filename)
+
+  local start_line = opts.line1 - 1
+  local end_line = opts.line2
+
+  local lines
+  if opts.range > 0 then
+    lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, false)
+  else
+    lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  end
+
+  vim.fn.writefile(lines, target)
+end, {
+  range = true,
+})

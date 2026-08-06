@@ -17,6 +17,7 @@ return {
         "vimdoc",
         "markdown",
         "markdown_inline",
+        "kotlin",
       }
 
       treesitter.setup()
@@ -36,6 +37,7 @@ return {
           "vim",
           "vimdoc",
           "markdown",
+          "kotlin",
         },
         callback = function()
           pcall(vim.treesitter.start)

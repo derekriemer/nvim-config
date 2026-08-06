@@ -4,8 +4,25 @@ return {
     dependencies = {
       "saghen/blink.lib",
     },
-    build = function()
-      require("blink.cmp").build():pwait()
+    build = function(plugin)
+      local blink_lib = require("lazy.core.config").plugins["blink.lib"]
+      local result = vim
+        .system({
+          vim.v.progpath,
+          "--headless",
+          "--clean",
+          "--cmd",
+          "set runtimepath+=" .. vim.fn.fnameescape(blink_lib.dir),
+          "--cmd",
+          "set runtimepath+=" .. vim.fn.fnameescape(plugin.dir),
+          "+lua local ok, err = require('blink.cmp').build():pwait(); if not ok then error(err) end",
+          "+qa",
+        }, { text = true })
+        :wait()
+
+      if result.code ~= 0 then
+        error(result.stderr)
+      end
     end,
 
     opts = {

@@ -19,6 +19,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
+          "kotlin_language_server",
           "lua_ls",
           "rust_analyzer",
           "ts_ls",
@@ -27,6 +28,7 @@ return {
       })
 
       vim.lsp.enable({
+        "kotlin_language_server",
         "lua_ls",
         "rust_analyzer",
         "ts_ls",
