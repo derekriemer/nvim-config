@@ -69,7 +69,7 @@ The current Lazy-managed plugin set is:
 
 `lua/plugins/lsp.lua` asks Mason to install and enable:
 
-- `kotlin_language_server`
+- `kotlin_lsp` (Mason package: `kotlin-lsp`)
 - `lua_ls`
 - `rust_analyzer`
 - `ts_ls`
