@@ -79,6 +79,8 @@ return {
       end
 
       local maps = {
+        { "]m", next_start("@function.outer", "textobjects"), "Next method" },
+        { "[m", previous_start("@function.outer", "textobjects"), "Previous method" },
         { "]h", next_start("@heading.outer", "textobjects"), "Next heading" },
         { "[h", previous_start("@heading.outer", "textobjects"), "Previous heading" },
         { "]s", next_start("@section.outer", "textobjects"), "Next section" },

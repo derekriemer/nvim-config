@@ -77,18 +77,73 @@ return {
         ui_select = true,
         on_change = announce_picker_item,
 
+        sources = {
+          explorer = {
+            jump = {
+              close = true,
+            },
+          },
+        },
+
         icons = {
           files = {
             enabled = false,
+            dir = "",
+            dir_open = "",
+            file = "",
+          },
+          keymaps = {
+            nowait = "! ",
           },
           git = {
             enabled = false,
+            commit = "",
+            staged = "S",
+            added = "A",
+            deleted = "D",
+            ignored = "I",
+            modified = "M",
+            renamed = "R",
+            unmerged = "U",
+            untracked = "?",
+          },
+          tree = {
+            vertical = "| ",
+            middle = "+-",
+            last = "`-",
+          },
+          ui = {
+            live = "live",
+            hidden = "h",
+            ignored = "i",
+            follow = "f",
+            selected = "* ",
+            unselected = "  ",
+          },
+          undo = {
+            saved = "saved ",
           },
           diagnostics = {
             Error = "error ",
             Warn = "warning ",
             Hint = "hint ",
             Info = "info ",
+          },
+          lsp = {
+            unavailable = "no",
+            enabled = "on",
+            disabled = "off",
+            attached = "ok",
+          },
+          kinds = {
+            Array = "", Boolean = "", Class = "", Collapsed = "", Color = "",
+            Constant = "", Constructor = "", Control = "", Copilot = "", Enum = "",
+            EnumMember = "", Event = "", Field = "", File = "", Folder = "",
+            Function = "", Interface = "", Key = "", Keyword = "", Method = "",
+            Module = "", Namespace = "", Null = "", Number = "", Object = "",
+            Operator = "", Package = "", Property = "", Reference = "", Snippet = "",
+            String = "", Struct = "", Text = "", TypeParameter = "", Unit = "",
+            Unknown = "", Value = "", Variable = "",
           },
         },
 
