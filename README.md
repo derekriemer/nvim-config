@@ -36,6 +36,16 @@ git clone <repo-url> ~/.config/nvim
 nvim
 ```
 
+Alternatively, keep the repo in `~/code/nvim-config` and symlink it into Neovim's config directory:
+
+```sh
+mkdir -p ~/.config
+ln -s ~/code/nvim-config ~/.config/nvim
+nvim
+```
+
+If `~/.config/nvim` already exists, move it to a backup location before creating the symlink. Adjust the source path if you cloned the repo somewhere else.
+
 On first launch, `lua/config/lazy.lua` clones `lazy.nvim` into Neovim's data directory and installs the configured plugins. After startup, run:
 
 ```vim
@@ -101,28 +111,36 @@ If highlighting or textobjects are missing, check:
 
 ## Local Speech Dependency
 
-`lua/config/speaks.lua` loads `nvim-speaks` directly from a local checkout, not from Lazy:
+`lua/config/speaks.lua` loads the speech plugin and TCP bridge from local checkouts. On Linux or inside WSL, install `git`, `bash`, and `socat`, then run from this repo:
 
-- Linux/macOS path: `~/code/nvim-speaks/nvim`
-- Windows path currently configured: `//wsl.localhost/Ubuntu/home/derek/code/nvim-speaks/nvim`
-
-Set up that repo before starting this config, or comment out `require("config.speaks")` in `init.lua` until it exists.
-
-The speech command is:
-
-```lua
-{ "tcp-relay", "127.0.0.1", "7533" }
+```sh
+# Ubuntu/Debian:
+sudo apt install git bash socat
+./bootstrap.sh
 ```
 
-So `tcp-relay` also needs to be installed and available on `PATH` for speech output to work.
+The script clones these repositories over HTTPS:
+
+- [nvim-speaks](https://github.com/derekriemer/nvim-speaks) into `~/code/nvim-speaks/nvim-speaks`.
+- [nvim-speaks-tcp-bridge](https://github.com/derekriemer/nvim-speaks-tcp-bridge) into `~/code/nvim-speaks/nvim-speaks-tcp-bridge`.
+
+The script also symlinks this config checkout into `${XDG_CONFIG_HOME:-~/.config}/nvim`. It works from any working directory. If a different config or symlink already exists there, it stops and asks you to move it aside; it never overwrites it.
+
+Rerunning the script keeps existing checkouts and a matching config link unchanged; it does not pull updates.
+
+The config adds the plugin checkout to Neovim's runtimepath and launches the bridge with Bash using its absolute path, so no extra `PATH` setup is needed. The bridge uses `socat` to connect to `127.0.0.1:7533`.
+
+This is the current relay setup for Linux/WSL. The custom Rust `tcp-relay` is not required.
+
+Run your speech server separately on that endpoint (or forward it there using an SSH tunnel). The bootstrap script does not install or start a speech server. For native Windows, [nvim-speaks-windows-server](https://github.com/derekriemer/nvim-speaks-windows-server) provides NVDA/SAPI backends; follow that repo's build and setup instructions on the Windows host.
 
 ## Windows Status
 
-Windows is not fully working yet. There is partial Windows-specific shell handling in `lua/config/locals.lua`, which switches Neovim to `pwsh`, and `lua/config/speaks.lua` points at the WSL copy of `nvim-speaks`.
+Windows is not fully working yet. There is partial Windows-specific shell handling in `lua/config/locals.lua`, which switches Neovim to `pwsh`, and `lua/config/speaks.lua` points at the WSL speech checkouts under `//wsl.localhost/Ubuntu/home/derek/code/nvim-speaks`.
 
 Known follow-up work:
 
-- Confirm the `nvim-speaks` path and `tcp-relay` behavior from native Windows Neovim.
+- Confirm the WSL checkout paths and Bash/`socat` bridge invocation from native Windows Neovim. The bootstrap script targets Linux/WSL, not native Windows.
 - Confirm Lazy native builds, especially `blink.cmp`.
 - Confirm Mason language server installs under `pwsh`.
 - Decide whether Windows should run native tools or use WSL paths consistently.
